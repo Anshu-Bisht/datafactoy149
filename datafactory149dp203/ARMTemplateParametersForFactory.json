@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "datafactory149dp203"
+		},
+		"appdb_connectionString": {
+			"value": ""
+		},
+		"appvmdp203_password": {
+			"value": ""
+		},
+		"datalake200050_accountKey": {
+			"value": ""
+		},
+		"dataworkspace149dp203_connectionString": {
+			"value": ""
+		},
+		"appvmdp203_properties_typeProperties_host": {
+			"value": "C:\\inetpub\\logs\\LogFiles\\W3SVC1"
+		},
+		"appvmdp203_properties_typeProperties_userId": {
+			"value": "appadmin"
+		},
+		"datalake200050_properties_typeProperties_url": {
+			"value": "https://datalake200050.dfs.core.windows.net/"
+		}
+	}
+}
