@@ -1,0 +1,9 @@
+{
+	"name": "datafactory149dp203",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ac8b4a9b-2f08-47e5-a21d-afce0d4a93e6",
+		"tenantId": "adb53b4f-b05f-4dcb-a2e1-9111380568c3"
+	}
+}

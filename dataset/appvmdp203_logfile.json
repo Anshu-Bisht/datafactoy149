@@ -1,0 +1,17 @@
+{
+	"name": "appvmdp203_logfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "appvmdp203",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

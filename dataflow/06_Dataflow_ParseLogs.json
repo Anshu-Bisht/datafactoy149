@@ -1,0 +1,80 @@
+{
+	"name": "06_Dataflow_ParseLogs",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "datalake200050_logdatafile",
+						"type": "DatasetReference"
+					},
+					"name": "LogfileStream"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataworkspace149dp203_datapool_weblogs",
+						"type": "DatasetReference"
+					},
+					"name": "WebLogsSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RenameColumn"
+				},
+				{
+					"name": "SplitLogData"
+				},
+				{
+					"name": "MapColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {2024-09-09 14:59:42 10.0.0.4 GET / - 80 - 13.91.182.218 Mozilla/5.0+zgrab/0.x - 200 0 0 256} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     skipLines: 4) ~> LogfileStream",
+				"LogfileStream select(mapColumn(",
+				"          logdata = {2024-09-09 14:59:42 10.0.0.4 GET / - 80 - 13.91.182.218 Mozilla/5.0+zgrab/0.x - 200 0 0 256}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RenameColumn",
+				"RenameColumn derive(logdata = split(logdata,\" \")) ~> SplitLogData",
+				"SplitLogData derive(LogDate = logdata[1],",
+				"          IPAddress = logdata[9],",
+				"          RequestMethod = logdata[4],",
+				"          RequestResource = logdata[5]) ~> MapColumns",
+				"MapColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          LogDate as date,",
+				"          IPAddress as string,",
+				"          RequestMethod as string,",
+				"          RequestResource as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          LogDate,",
+				"          IPAddress,",
+				"          RequestMethod,",
+				"          RequestResource",
+				"     )) ~> WebLogsSink"
+			]
+		}
+	}
+}
